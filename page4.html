@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <title>Главный вопрос</title>
+    <style>
+      * { box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        width: 100%;
+        background: #000;
+        color: #fff;
+        font-family: system-ui, -apple-system, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 24px 16px 40px;
+        overflow-x: hidden;
+      }
+      .page4-heading {
+        font-size: clamp(20px, 5vw, 28px);
+        font-weight: 600;
+        text-align: center;
+        margin-bottom: 40px;
+        max-width: 420px;
+        line-height: 1.35;
+      }
+      .page4-buttons {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        justify-content: center;
+        align-items: center;
+        min-height: 52px;
+      }
+      .page4-btn {
+        display: inline-block;
+        padding: 14px 24px;
+        border-radius: 999px;
+        font-size: 16px;
+        font-weight: 600;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        transition: transform 0.08s ease-out, box-shadow 0.2s;
+        white-space: nowrap;
+      }
+      .page4-btn--run {
+        background: #333;
+        color: #fff;
+        position: absolute;
+        transition: left 0.15s ease-out, top 0.15s ease-out;
+      }
+      .page4-btn--run:hover {
+        background: #444;
+      }
+      .page4-btn--yes {
+        background: linear-gradient(135deg, #ff6f91, #b28dff);
+        color: #fff;
+        opacity: 0;
+        transform: scale(0.9);
+        transition: opacity 0.4s ease, transform 0.3s ease, box-shadow 0.2s;
+      }
+      .page4-btn--yes.show {
+        opacity: 1;
+        transform: scale(1);
+        position: relative;
+      }
+      .page4-btn--yes:hover {
+        box-shadow: 0 8px 24px rgba(255, 111, 145, 0.4);
+      }
+      .page4-btn-wrap {
+        position: relative;
+        width: 100%;
+        min-height: 120px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="page4-heading">Главный вопрос: я тебе понравился?</h1>
+
+    <div class="page4-btn-wrap">
+      <button type="button" class="page4-btn page4-btn--run" id="btnRun">
+        Пока не могу что-то сказать
+      </button>
+      <a href="page5.html" class="page4-btn page4-btn--yes" id="btnYes">
+        Да, конечно
+      </a>
+    </div>
+
+    <script>
+      (function () {
+        var btnRun = document.getElementById("btnRun");
+        var btnYes = document.getElementById("btnYes");
+        var wrap = document.querySelector(".page4-btn-wrap");
+        var showYesAfter = 4000;
+        var runRadius = 100;
+        var pointer = { x: -9999, y: -9999 };
+        var yesShown = false;
+
+        function showYes() {
+          if (yesShown) return;
+          yesShown = true;
+          btnYes.classList.add("show");
+        }
+
+        setTimeout(showYes, showYesAfter);
+
+        function getRandomPos() {
+          var rect = wrap.getBoundingClientRect();
+          var btnRect = btnRun.getBoundingClientRect();
+          var padding = 20;
+          var maxX = rect.width - btnRect.width - padding * 2;
+          var maxY = rect.height - btnRect.height - padding * 2;
+          if (maxX < 10) maxX = 10;
+          if (maxY < 10) maxY = 10;
+          return {
+            left: padding + Math.random() * maxX,
+            top: padding + Math.random() * maxY
+          };
+        }
+
+        function placeRunButton() {
+          var pos = getRandomPos();
+          btnRun.style.left = pos.left + "px";
+          btnRun.style.top = pos.top + "px";
+        }
+
+        function distance(x1, y1, x2, y2) {
+          return Math.hypot(x2 - x1, y2 - y1);
+        }
+
+        function checkAndRun() {
+          var rect = btnRun.getBoundingClientRect();
+          var cx = rect.left + rect.width / 2;
+          var cy = rect.top + rect.height / 2;
+          var d = distance(pointer.x, pointer.y, cx, cy);
+          if (d < runRadius) {
+            placeRunButton();
+          }
+        }
+
+        placeRunButton();
+
+        document.addEventListener("mousemove", function (e) {
+          pointer.x = e.clientX;
+          pointer.y = e.clientY;
+          checkAndRun();
+        });
+
+        document.addEventListener("touchmove", function (e) {
+          if (e.touches.length) {
+            pointer.x = e.touches[0].clientX;
+            pointer.y = e.touches[0].clientY;
+            checkAndRun();
+          }
+        }, { passive: true });
+
+        btnRun.addEventListener("mouseenter", function () {
+          placeRunButton();
+        });
+
+        btnRun.addEventListener("click", function (e) {
+          e.preventDefault();
+          placeRunButton();
+        });
+      })();
+    </script>
+  </body>
+</html>

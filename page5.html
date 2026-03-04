@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover"
+    />
+    <title>В твоих карих глазах</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * { box-sizing: border-box; }
+      html, body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        width: 100%;
+        background: #0d0a0f;
+      }
+      .page5-wrap {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 24px 16px 40px;
+        gap: 28px;
+        text-align: center;
+      }
+      .page5-card {
+        width: 100%;
+        max-width: min(380px, 95vw);
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+      }
+      .page5-card img {
+        width: 100%;
+        height: auto;
+        max-height: min(70vh, 520px);
+        object-fit: contain;
+        display: block;
+        vertical-align: middle;
+      }
+      .page5-quote {
+        font-family: "Great Vibes", cursive;
+        font-size: clamp(26px, 5.5vw, 40px);
+        line-height: 1.4;
+        color: #f5ecff;
+        max-width: 360px;
+        margin: 0;
+      }
+      @media (max-width: 480px) {
+        .page5-wrap { padding: 20px 12px 32px; gap: 24px; }
+        .page5-card img { max-height: 65vh; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page5-wrap">
+      <div class="page5-card">
+        <img src="she.png" alt="" />
+      </div>
+      <p class="page5-quote">В твоих карих глазах я увидел то, что давно искал</p>
+    </div>
+  </body>
+</html>
